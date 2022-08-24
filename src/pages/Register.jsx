@@ -77,7 +77,7 @@ const Register = () => {
           status: "success",
           isClosable: true,
         });
-        history.push("/");
+        setTimeout(() => history.push("/repos"), 600);
       })
       .catch(error => {
         console.log(error);
