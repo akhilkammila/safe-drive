@@ -8,6 +8,12 @@ import {
   InputGroup,
   InputLeftElement,
   InputRightElement,
+  UnorderedList,
+  ListItem,
+  Flex,
+  Text,
+  Image,
+  Link,
 } from "@chakra-ui/react";
 import { useEffect, useState } from "react";
 import { Link as RouterLink, useHistory } from "react-router-dom";
@@ -17,31 +23,18 @@ import RepoView from "../Components/RepoView";
 import { useAuth } from "../contexts/authContext";
 import firebase from "../firebase";
 
-const Repos = () => {
-  const { currentUser } = useAuth();
-  const history = useHistory();
+import raspberrypi from '../images/raspberrypi.png';
 
-  const [keyword, setKeyword] = useState("");
-  const [repos, setRepos] = useState([]);
+import { CircularProgressbar } from 'react-circular-progressbar';
+import 'react-circular-progressbar/dist/styles.css';
+
+
+const Repos = () => {
   const [loaded, setLoaded] = useState(false);
 
   useEffect(() => {
-    const unsub = firebase
-      .firestore()
-      .collection("repos")
-      .where("creatorId", "==", currentUser.uid)
-      .onSnapshot(snapshot => {
-        let docs = snapshot.docs;
-
-        docs = docs.map(doc => doc.data());
-
-        setRepos(docs);
-        setLoaded(true);
-        console.log(docs);
-      });
-
-    return unsub;
-  }, [currentUser]);
+    setLoaded(true);
+  }, []);
 
   if (!loaded)
     return (
@@ -55,71 +48,67 @@ const Repos = () => {
   return (
     <Layout>
       <Fade in={loaded}>
-        <Box w="100%" height="100%" p="5rem">
-          <Box
-            id="title-search"
-            d="flex"
-            justifyContent="space-between"
-            alignItems="center"
-          >
-            {keyword ? (
-              <Heading fontSize="x-large" fontWeight="normal">
-                Searching for <strong>{keyword}</strong>
-              </Heading>
-            ) : (
-              <Box d="flex" justifyContent="center" alignItems="center">
-                <Heading>Your Repos</Heading>
-                <Button
-                  ml={5}
-                  as={RouterLink}
-                  to="/create"
-                  leftIcon={<AddIcon />}
-                >
-                  Add New Repo
-                </Button>
-              </Box>
-            )}
-            <Box>
-              <InputGroup position="relative">
-                <InputLeftElement
-                  zIndex="-1"
-                  children={<Search2Icon color="gray.400" />}
-                />
-                <Input
-                  bgColor="#ffffff88"
-                  _hover={{ filter: "brightness(1.1)" }}
-                  _focus={{ bgColor: "#ffffff00", border: "1px solid white" }}
-                  w="20rem"
-                  h="2.5rem"
-                  value={keyword}
-                  position="relative"
-                  onChange={e => setKeyword(e.target.value)}
-                />
 
-                {keyword && (
-                  <InputRightElement
-                    children={
-                      <CloseIcon
-                        color="gray.400"
-                        fontSize="sm"
-                        cursor="pointer"
-                        onClick={() => setKeyword("")}
-                      />
-                    }
-                  />
-                )}
-              </InputGroup>
-            </Box>
+        <Flex flexDirection="column" textAlign="center" justifyContent="center" p="5rem" h="10vh">
+          <Heading as="h1" size='3xl' >
+            need a <span style={{ color: "#069191" }}>safedrive</span> device?
+          </Heading>
+
+          <Text as="h1" fontSize='3xl' >
+            its 100% free – there's nothing to lose!
+          </Text>
+        </Flex>
+
+        <Flex>
+          {/* Col 1 */}
+          <Box  w="50%" height="85vh" p="5rem">
+
+            <Image src={raspberrypi}/>
+
           </Box>
-          <RepoView
-            repos={
-              keyword
-                ? repos.filter(repo => repo.name.includes(keyword))
-                : repos
-            }
-            history={history}
-          />
+
+          {/* Col 2 */}
+          <Box  w="50%" height="85vh" p="5rem">
+
+
+            <Button
+              mt={1}
+              fontWeight="bolder"
+              size="lg"
+              ml={2}
+              variant="ghost"
+              colorScheme="teal"
+              bgColor="#00808011"
+            >
+              <Link href="https://www.sparkfun.com/products/18713?src=raspberrypi" isExternal style={{textDecoration: "none"}} >
+                Buy Here
+              </Link>
+            </Button>
+
+            <Image src={raspberrypi}/>
+
+          </Box>
+
+        </Flex>
+
+        {/* End of Heading Section */}
+
+        {/* Section 1 */}
+        <Box w="100%" height="100%" p="5rem" backgroundColor="white">
+          <Heading>sec1</Heading>
         </Box>
+
+        {/* Section 2 */}
+        <Box w="100%" height="100%" p="5rem" backgroundColor="gray">
+          <Heading>sec2</Heading>
+        </Box>
+
+        {/* Section 3 */}
+        <Box w="100%" height="100%" p="5rem" backgroundColor="white">
+          <Heading>sec3</Heading>
+        </Box>
+
+
       </Fade>
     </Layout>
   );

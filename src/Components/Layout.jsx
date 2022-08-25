@@ -45,20 +45,22 @@ const Layout = ({ children }) => {
             filter: "brightness(0.9)",
           }}
           userSelect="none"
-          bgGradient="linear(to right, pink.300, teal.300)"
-          bgClip="text"
+          color= "#069191"
         >
-          project name
+          safedrive
         </Heading>
         <Box id="items" d="flex" justifyContent="space-between">
           <Button variant="ghost" as={RouterLink} to="/" mr="4">
             Home
           </Button>
+          <Button variant="ghost" as={RouterLink} to="/about" mr="4">
+            About
+          </Button>
           <Button variant="ghost" as={RouterLink} to="/repos" mr="4">
-            Private Page 1
+            Device Registration
           </Button>
           <Button variant="ghost" as={RouterLink} to="/feed" mr="4">
-            Private Page 2
+            Dashboard
           </Button>
           {!currentUser ? (
             <>

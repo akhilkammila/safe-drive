@@ -6,7 +6,7 @@ import RepoCard from "../Components/RepoCard";
 import { useAuth } from "../contexts/authContext";
 import firebase from "../firebase";
 
-const Feed = () => {
+const Dashboard = () => {
   const { currentUser } = useAuth();
 
   const [loaded, setLoaded] = useState(false);
@@ -108,4 +108,4 @@ const Feed = () => {
   );
 };
 
-export default Feed;
+export default Dashboard;
